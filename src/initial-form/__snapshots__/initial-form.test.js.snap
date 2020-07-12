@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should initial structure 1`] = `
+<div
+  data-error=""
+>
+  There was an error.
+</div>
+`;
