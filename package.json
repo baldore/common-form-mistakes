@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel index.html",
+    "dev": "parcel watch index.html",
     "test": "jest",
     "lint": "eslint src"
   },
@@ -14,9 +15,14 @@
     }
   },
   "lint-staged": {
-    "src/*": [
+    "src/**/*.js": [
       "eslint --fix",
       "prettier --write"
+    ]
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./setupTests.js"
     ]
   },
   "devDependencies": {
@@ -33,7 +39,8 @@
     "jest": "^26.1.0",
     "lint-staged": "^10.2.11",
     "parcel-bundler": "^1.12.4",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "regenerator-runtime": "^0.13.5"
   },
   "dependencies": {}
 }
