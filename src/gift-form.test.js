@@ -1,7 +1,7 @@
 import { getByLabelText, fireEvent, findByText } from '@testing-library/dom'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import createForm from './initial-form'
+import createForm from './gift-form'
 
 const server = setupServer()
 
@@ -15,7 +15,7 @@ afterAll(() => server.close())
 test('should display an error message if there is a problem with the API', async () => {
   server.use(
     rest.post('http://api.sendagifttosomeone.com/gifts', (_req, res, ctx) =>
-      res(ctx.status(500), ctx.json({ message: 'Invalid object' }))
+      res(ctx.status(500), ctx.json({ error: 'Invalid object' }))
     )
   )
   const { container } = createForm()
@@ -26,14 +26,13 @@ test('should display an error message if there is a problem with the API', async
 
   const errorMessage = await findByText(
     container,
-    /there was an error: invalid object/i
+    /there was an error sending the request. Please try again/i
   )
   expect(errorMessage).toMatchSnapshot()
-
   expect(window.dataLayer).toMatchInlineSnapshot(`
     Array [
       Object {
-        "error": "Invalid object",
+        "error": "Request failed with status code 500",
         "formId": "gift",
       },
     ]
@@ -59,7 +58,6 @@ test('should display a success message', async () => {
 
   const success = await findByText(container, /form sent successfully/i)
   expect(success).toMatchSnapshot()
-
   expect(window.dataLayer).toMatchInlineSnapshot(`
     Array [
       Object {

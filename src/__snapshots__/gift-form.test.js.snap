@@ -12,6 +12,6 @@ exports[`should display an error message if there is a problem with the API 1`] 
 <div
   data-message=""
 >
-  There was an error: Invalid object
+  There was an error sending the request. Please try again.
 </div>
 `;

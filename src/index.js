@@ -1,4 +1,5 @@
-import createForm from './initial-form/initial-form'
+import 'regenerator-runtime/runtime'
+import createForm from './gift-form'
 
 const { container } = createForm()
 
