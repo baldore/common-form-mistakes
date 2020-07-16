@@ -17,7 +17,7 @@ function createForm() {
         <input type="text" id="email" name="email" />
       </div>
       <button>Submit</button>
-      <div data-error></div>
+      <div data-message></div>
     </form>
   `)
 
@@ -26,13 +26,14 @@ function createForm() {
     try {
       // TODO: Get data from form
       // TODO: Pass data to post (without mapping it)
-      const content = await axios.post(`${SERVER_ROOT}/gifts`)
+      await axios.post(`${SERVER_ROOT}/gifts`)
       // TODO: Add analytics example (without abstraction)
-      console.log({ content })
+      const messageContainer = container.querySelector('[data-message]')
+      messageContainer.innerHTML = `Form sent successfully`
     } catch (e) {
       const requestError = e.response.data.message
-      const errorContainer = container.querySelector('[data-error]')
-      errorContainer.innerHTML = `There was an error: ${requestError}`
+      const messageContainer = container.querySelector('[data-message]')
+      messageContainer.innerHTML = `There was an error: ${requestError}`
     }
   }
 

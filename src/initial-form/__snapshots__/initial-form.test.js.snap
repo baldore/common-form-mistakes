@@ -1,8 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should display a success message 1`] = `
+<div
+  data-message=""
+>
+  Form sent successfully
+</div>
+`;
+
 exports[`should display an error message if there is a problem with the API 1`] = `
 <div
-  data-error=""
+  data-message=""
 >
   There was an error: Invalid object
 </div>
