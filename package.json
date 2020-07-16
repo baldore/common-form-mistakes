@@ -7,7 +7,7 @@
     "start": "parcel index.html",
     "dev": "parcel watch index.html",
     "test": "jest",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watchAll",
     "lint": "eslint src"
   },
   "husky": {
