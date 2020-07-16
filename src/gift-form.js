@@ -12,34 +12,6 @@ function renderTemplate(template) {
 }
 
 function createForm() {
-  const onSubmit = async (e) => {
-    const form = e.target
-    e.preventDefault()
-
-    try {
-      const formData = new FormData(form)
-      const dataToSent = Object.fromEntries(formData)
-
-      await axios.post(`${SERVER_ROOT}/gifts`, dataToSent)
-
-      const messageContainer = container.querySelector('[data-message]')
-      messageContainer.innerHTML = `Form sent successfully`
-
-      // Analytics
-      window.dataLayer.push({ formId: 'gift', success: true })
-    } catch (e) {
-      const requestError = e.response.data.message
-      const messageContainer = container.querySelector('[data-message]')
-      messageContainer.innerHTML = `There was an error: ${requestError}`
-
-      // Analytics
-      window.dataLayer.push({
-        formId: 'gift',
-        error: requestError,
-      })
-    }
-  }
-
   const container = renderTemplate(`
     <form>
       <h1>Send Gift</h1>
@@ -51,6 +23,32 @@ function createForm() {
       <div data-message></div>
     </form>
   `)
+  const messageContainer = container.querySelector('[data-message]')
+
+  const onSubmit = async (e) => {
+    const form = e.target
+    e.preventDefault()
+
+    try {
+      const formData = new FormData(form)
+      const dataToSent = Object.fromEntries(formData)
+
+      await axios.post(`${SERVER_ROOT}/gifts`, dataToSent)
+
+      messageContainer.innerHTML = `Form sent successfully`
+
+      // Analytics
+      window.dataLayer.push({ formId: 'gift', success: true })
+    } catch (e) {
+      messageContainer.innerHTML = `There was an error sending the request. Please try again.`
+
+      // Analytics
+      window.dataLayer.push({
+        formId: 'gift',
+        error: e.message,
+      })
+    }
+  }
 
   // Event binding
   container.addEventListener('submit', onSubmit)

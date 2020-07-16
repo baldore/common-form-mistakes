@@ -13,3 +13,4 @@ Nota: para este ejercicio, no se usaran frameworks como React o Vue, pero los co
 Para validar que el formulario funciona correctamente, usaremos `jest` y `testing-library`. Nos enfocaremos solo en 2 casos: formulario enviado correctamente; y errores devueltos por el servicio.
 
 Clonar el repositorio desde el siguiente link https://github.com/baldore/common-form-mistakes para ir trabajando el ejercicio.
+
