@@ -41,13 +41,11 @@ function createForm() {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    try {
-      const data = getData()
-      await createGift(data)
-      handleSuccess()
-    } catch (e) {
-      handleError(e)
-    }
+    const data = getData()
+    const { success, error } = await createGift(data)
+
+    if (success) handleSuccess()
+    if (error) handleError(error)
   }
 
   // Event binding
