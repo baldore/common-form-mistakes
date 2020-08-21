@@ -1,9 +1,5 @@
-import axios from 'axios'
-
-const SERVER_ROOT = 'http://api.sendagifttosomeone.com'
-
-// Needed for analytics
-window.dataLayer = window.dataLayer || []
+import { trackAnalyticsEvent } from './utils/analytics'
+import { createGift } from './services/gifts'
 
 function renderTemplate(template) {
   const container = document.createElement('div')
@@ -25,28 +21,32 @@ function createForm() {
   `)
   const messageContainer = container.querySelector('[data-message]')
 
+  const getData = () => {
+    const formData = new FormData(container)
+    const data = Object.fromEntries(formData)
+    return {
+      email: data.email,
+    }
+  }
+
+  const handleSuccess = () => {
+    messageContainer.innerHTML = `Form sent successfully`
+    trackAnalyticsEvent({ formId: 'gift', success: true })
+  }
+
+  const handleError = (error) => {
+    messageContainer.innerHTML = `There was an error sending the request. Please try again.`
+    trackAnalyticsEvent({ formId: 'gift', error: error.message })
+  }
+
   const onSubmit = async (e) => {
-    const form = e.target
     e.preventDefault()
-
     try {
-      const formData = new FormData(form)
-      const dataToSent = Object.fromEntries(formData)
-
-      await axios.post(`${SERVER_ROOT}/gifts`, dataToSent)
-
-      messageContainer.innerHTML = `Form sent successfully`
-
-      // Analytics
-      window.dataLayer.push({ formId: 'gift', success: true })
+      const data = getData()
+      await createGift(data)
+      handleSuccess()
     } catch (e) {
-      messageContainer.innerHTML = `There was an error sending the request. Please try again.`
-
-      // Analytics
-      window.dataLayer.push({
-        formId: 'gift',
-        error: e.message,
-      })
+      handleError(e)
     }
   }
 
