@@ -1,8 +1,4 @@
-# Template - Javascript
+# Common form mistakes
 
-Simple and minimalistic template with:
-
-- Parcel to work in the browser.
-- Jest for testing.
-- Eslint and Prettier.
+Companion repository for blog post https://dailyhacks.dev/es/errores-comunes-al-crear-formularios
 
